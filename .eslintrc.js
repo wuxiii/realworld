@@ -2,17 +2,22 @@ module.exports = {
   root: true,
   env: {
     browser: true,
-    node: true
+    node: true,
+    es6: true,
   },
-  parserOptions: {
-    parser: "babel-eslint"
-  },
+  // parserOptions: {
+  //   // parser: "babel-eslint",
+  //   parser: "vue-eslint-parser",
+
+  // },
+  parser: "vue-eslint-parser",
+
   extends: [
     "eslint:recommended",
     // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
     // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
-    // "plugin:prettier/recommended",
-    "plugin:vue/recommended"
+    "plugin:vue/recommended",
+    "plugin:prettier/recommended",
   ],
   // required to lint *.vue files
   plugins: ["vue"],
@@ -26,11 +31,11 @@ module.exports = {
         singleline: 3,
         multiline: {
           max: 1,
-          allowFirstLine: true
-        }
-      }
+          allowFirstLine: true,
+        },
+      },
     ],
     // "vue/multiline-html-element-content-newline": "off"
     // "prettier/prettier": ["error", { semi: false }]
-  }
+  },
 };

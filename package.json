@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
-    "start": "nuxt start"
+    "start": "nuxt start",
+    "fix": "node_modules/.bin/eslint --fix './**/*.js' './**/*.vue'"
   },
   "keywords": [],
   "author": "",

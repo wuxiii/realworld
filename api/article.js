@@ -5,7 +5,7 @@ export const getArticles = (data) => {
   return request({
     method: "GET",
     url: "/api/articles",
-    params:data
+    params: data,
   });
 };
 
@@ -13,7 +13,7 @@ export const getYourFeedArticles = (data) => {
   return request({
     method: "GET",
     url: "/api/articles/feed",
-    params:data,
+    params: data,
   });
 };
 
@@ -22,22 +22,49 @@ export const getTags = (data) => {
   return request({
     method: "GET",
     url: "/api/tags",
-    params:data
+    params: data,
   });
 };
 
 // 添加点赞
-export const addFavorite = slug => {
+export const addFavorite = (slug) => {
   return request({
-    method: 'POST',
-    url: `/api/articles/${slug}/favorite`
-  })
-}
+    method: "POST",
+    url: `/api/articles/${slug}/favorite`,
+  });
+};
 
 // 取消点赞
-export const deleteFavorite = slug => {
+export const deleteFavorite = (slug) => {
   return request({
-    method: 'DELETE',
-    url: `/api/articles/${slug}/favorite`
-  })
-}
+    method: "DELETE",
+    url: `/api/articles/${slug}/favorite`,
+  });
+};
+
+// 获取文章详情
+export const getArticle = (slug) => {
+  return request({
+    method: "GET",
+    url: `/api/articles/${slug}`,
+  });
+};
+
+// 获取文章评论
+export const getComments = (slug) => {
+  return request({
+    method: "GET",
+    url: `/api/articles/${slug}/comments`,
+  });
+};
+//Add Comments to an Article
+// "comment": {
+//   "body": "His name was my name too."
+// }
+export const submitComments = ({slug, comment}) => {
+  return request({
+    method: "POST",
+    url: `/api/articles/${slug}/comments`,
+    data: {comment},
+  });
+};
