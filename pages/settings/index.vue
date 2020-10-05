@@ -8,25 +8,43 @@
           <form>
             <fieldset>
               <fieldset class="form-group">
-                <input class="form-control" type="text" placeholder="URL of profile picture" />
+                <input
+                  class="form-control"
+                  type="text"
+                  placeholder="URL of profile picture"
+                />
               </fieldset>
               <fieldset class="form-group">
-                <input class="form-control form-control-lg" type="text" placeholder="Your Name" />
+                <input
+                  class="form-control form-control-lg"
+                  type="text"
+                  placeholder="Your Name"
+                />
               </fieldset>
               <fieldset class="form-group">
                 <textarea
                   class="form-control form-control-lg"
                   rows="8"
                   placeholder="Short bio about you"
-                ></textarea>
+                />
               </fieldset>
               <fieldset class="form-group">
-                <input class="form-control form-control-lg" type="text" placeholder="Email" />
+                <input
+                  class="form-control form-control-lg"
+                  type="text"
+                  placeholder="Email"
+                />
               </fieldset>
               <fieldset class="form-group">
-                <input class="form-control form-control-lg" type="password" placeholder="Password" />
+                <input
+                  class="form-control form-control-lg"
+                  type="password"
+                  placeholder="Password"
+                />
               </fieldset>
-              <button class="btn btn-lg btn-primary pull-xs-right">Update Settings</button>
+              <button class="btn btn-lg btn-primary pull-xs-right">
+                Update Settings
+              </button>
             </fieldset>
           </form>
         </div>
@@ -37,9 +55,9 @@
 
 <script>
 export default {
-  name: "settings",
-};
+  name: "Settings",
+  middleware: "authenticated",
+}
 </script>
 
-<style>
-</style>
+<style></style>

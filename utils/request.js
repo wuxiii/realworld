@@ -4,4 +4,7 @@ const request = axios.create({
   baseURL: 'https://conduit.productionready.io',
 });
 
-export default request;
+const requestAll = (promiseArr)=>axios.all(promiseArr)
+
+export {request,requestAll};
+ 

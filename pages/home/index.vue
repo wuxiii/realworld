@@ -2,7 +2,9 @@
   <div class="home-page">
     <div class="banner">
       <div class="container">
-        <h1 class="logo-font">conduit</h1>
+        <h1 class="logo-font">
+          conduit
+        </h1>
         <p>A place to share your knowledge.</p>
       </div>
     </div>
@@ -12,69 +14,112 @@
         <div class="col-md-9">
           <div class="feed-toggle">
             <ul class="nav nav-pills outline-active">
-              <li class="nav-item">
-                <a class="nav-link disabled" href>Your Feed</a>
+              <li v-if="user" class="nav-item">
+                <nuxt-link :to="{name:'home',query:{ tab: 'your_feed'}}"
+                           class="nav-link"
+                           :class="{
+                             active:tabName==='your_feed'
+                           }"
+                           exact
+                >
+                  Your Feed
+                </nuxt-link>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href>Global Feed</a>
+                <nuxt-link :to="{name:'home',query:{ tab: 'global_feed'}}"
+                           class="nav-link"
+                           :class="{
+                             active:tabName==='global_feed'
+                           }"
+                           exact
+                >
+                  Global Feed
+                </nuxt-link>
+              </li>
+              <li v-if="tag" class="nav-item">
+                <nuxt-link :to="{name:'home',query:{ tab: 'tag',tag:tag}}"
+                           class="nav-link"
+                           :class="{
+                             active:tabName==='tag'
+                           }"
+                           exact
+                >
+                  #{{ tag }}
+                </nuxt-link>
               </li>
             </ul>
           </div>
 
-          <div class="article-preview">
+          <div
+            v-for="article in articles"
+            :key="article.slug"
+            class="article-preview"
+          >
             <div class="article-meta">
-              <a href="profile.html">
-                <img src="http://i.imgur.com/Qr71crq.jpg" />
-              </a>
+              <nuxt-link :to="{ name: 'profile', params: { username: article.author.username } }">
+                <img :src="article.author.image">
+              </nuxt-link>
               <div class="info">
-                <a href class="author">Eric Simons</a>
-                <span class="date">January 20th</span>
+                <nuxt-link
+                  :to="{ name: 'profile', params: { username: article.author.username } }"
+                  class="author"
+                >
+                  {{ article.author.username }}
+                </nuxt-link>
+                <span class="date">{{ article.createdAt | date("MMM DD, YYYY") }}</span>
               </div>
-              <button class="btn btn-outline-primary btn-sm pull-xs-right">
-                <i class="ion-heart"></i> 29
+              <button
+                class="btn btn-outline-primary btn-sm pull-xs-right"
+                :class="{active:article.favorited}"
+                :disabled="article.favoriteDisabled"
+                @click="onFavorite(article)"
+              >
+                <i class="ion-heart" />{{ article.favoritesCount }}
               </button>
             </div>
-            <a href class="preview-link">
-              <h1>How to build webapps that scale</h1>
-              <p>This is the description for the post.</p>
+            <nuxt-link
+              :to="{name:'article',params:{slug:article.slug}}"
+              class="preview-link"
+            >
+              <h1>{{ article.title }}</h1>
+              <p>{{ article.description }}</p>
               <span>Read more...</span>
-            </a>
+            </nuxt-link>
           </div>
 
-          <div class="article-preview">
-            <div class="article-meta">
-              <a href="profile.html">
-                <img src="http://i.imgur.com/N4VcUeJ.jpg" />
-              </a>
-              <div class="info">
-                <a href class="author">Albert Pai</a>
-                <span class="date">January 20th</span>
-              </div>
-              <button class="btn btn-outline-primary btn-sm pull-xs-right">
-                <i class="ion-heart"></i> 32
-              </button>
-            </div>
-            <a href class="preview-link">
-              <h1>The song you won't ever stop singing. No matter how hard you try.</h1>
-              <p>This is the description for the post.</p>
-              <span>Read more...</span>
-            </a>
-          </div>
+          <!-- 分页 -->
+          <nav>
+            <ul class="pagination">
+              <li
+                v-for="numb in totalPages"
+                :key="numb"
+                class="page-item"
+                :class="{active:numb === page}"
+              >
+                <nuxt-link class="page-link" :to="{name:'home',query:{page:numb,tag:$route.query.tag,tab:tabName}}">
+                  {{ numb }}
+                </nuxt-link>
+              </li>
+            </ul>
+          </nav>
         </div>
 
         <div class="col-md-3">
           <div class="sidebar">
             <p>Popular Tags</p>
-
-            <div class="tag-list">
-              <a href class="tag-pill tag-default">programming</a>
-              <a href class="tag-pill tag-default">javascript</a>
-              <a href class="tag-pill tag-default">emberjs</a>
-              <a href class="tag-pill tag-default">angularjs</a>
-              <a href class="tag-pill tag-default">react</a>
-              <a href class="tag-pill tag-default">mean</a>
-              <a href class="tag-pill tag-default">node</a>
-              <a href class="tag-pill tag-default">rails</a>
+            <div v-for="tag in tags" :key="tag" class="tag-list">
+              <nuxt-link
+                :to="{
+                  name:'home',
+                  query:{
+                    tag:tag,
+                    tab:'tag'
+                  }
+                }"
+                class="tag-pill tag-default"
+              >
+                {{ tag }}
+              </nuxt-link>
             </div>
           </div>
         </div>
@@ -84,10 +129,79 @@
 </template>
 
 <script>
+import { getArticles,getTags ,getYourFeedArticles,addFavorite,deleteFavorite} from "@/api/article"
+import {requestAll} from "@/utils/request"
+import { mapState } from "vuex";
 export default {
-  name: "home",
-};
+  name: "Home",
+  async asyncData({
+    isDev,
+    route,
+    store,
+    env,
+    params,
+    query,
+    req,
+    res,
+    redirect,
+    error
+  }) {
+    const page = Number.parseInt(query.page) || 1
+    const limit = 10
+    const tabName = query.tab || 'global_feed'
+    const getarticleData = tabName === 'your_feed'?getYourFeedArticles:getArticles
+    const [articlesData,tagsData] = await requestAll([
+        getarticleData({
+        limit:limit,
+        offset:(page-1)*limit,
+        tag:query.tag
+      }),
+      getTags()
+    ])
+
+    articlesData.data.articles.forEach((article) => (article.favoriteDisabled = false));
+    return {
+      articles:articlesData.data.articles,
+      articlesCount:articlesData.data.articlesCount,
+      page,
+      limit,
+      tags:Array.isArray(tagsData.data.tags)?tagsData.data.tags.filter(item =>item):[],
+      tag:query.tag,
+      tabName:tabName
+    }
+  },
+
+  computed: {
+    totalPages(){
+      return Math.ceil(this.articlesCount/this.limit)
+    },
+     ...mapState(["user"])
+
+  },
+  watchQuery:['page','tag','tab'],
+  methods: {
+   async onFavorite(article){
+      article.favoriteDisabled = true;
+      console.log('=====article===',article)
+
+      if(!this.user){
+          this.$router.push("login")
+          return 
+      }
+      if(article.favorited){
+        await deleteFavorite(article.slug)
+        article.favorited = false
+        article.favoritesCount -= 1
+      }else{
+        await addFavorite(article.slug)
+        article.favorited = true
+        article.favoritesCount += 1
+      }
+      article.favoriteDisabled = false
+
+    }
+  },
+}
 </script>
 
-<style>
-</style>
+<style></style>
