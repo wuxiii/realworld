@@ -3,6 +3,7 @@
  */
 
 import axios from "axios";
+const Cookies = process.client ? require("js-cookie") : undefined;
 
 // 创建请求对象
 export const request = axios.create({
@@ -35,6 +36,22 @@ export default ({store}) => {
     function (error) {
       // 如果请求失败(此时请求还没有发出去)就会进入这里
       // Do something with request error
+      console.log("====error====", error);
+      return Promise.reject(error);
+    }
+  );
+  request.interceptors.response.use(
+    (response) => {
+      console.log("====request.interceptors===", response);
+      return response;
+    },
+    (error) => {
+      console.dir(error);
+      if (error.response.status !== 401) {
+        return Promise.reject(error);
+      }
+      store.commit("setUser", null);
+      // Cookies.remove("user"); // fail!
       return Promise.reject(error);
     }
   );

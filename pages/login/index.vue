@@ -3,15 +3,13 @@
     <div class="container page">
       <div class="row">
         <div class="col-md-6 offset-md-3 col-xs-12">
-          <h1 class="text-xs-center">
-Sign up
+          <h1 class="text-xs-center">Sign up
 </h1>
           <p class="text-xs-center">
             <nuxt-link v-if="isLogin" to="register">
               Need an account
             </nuxt-link>
-            <nuxt-link v-else to="login">
-Have an account
+            <nuxt-link v-else to="login"> Have an account
 </nuxt-link>
           </p>
 
@@ -41,7 +39,7 @@ Have an account
                 placeholder="Your Name"
                 required
                 minlength="4"
-              >
+              />
             </fieldset>
             <fieldset class="form-group">
               <input
@@ -50,7 +48,7 @@ Have an account
                 type="email"
                 placeholder="Email"
                 required
-              >
+              />
             </fieldset>
             <fieldset class="form-group">
               <input
@@ -60,7 +58,7 @@ Have an account
                 placeholder="Password"
                 required
                 minlength="8"
-              >
+              />
             </fieldset>
             <button class="btn btn-lg btn-primary pull-xs-right">
               {{ isLogin ? "Sign in" : "Sign up" }}
@@ -81,12 +79,12 @@ export default {
   data() {
     return {
       user: {
-        username: "",
-        email: "lpzmail@163.com",
-        password: "12345678",
-        // email: "test99@test99.com",
+        // username: "",
+        // email: "lpzmail@163.com",
         // password: "12345678",
-        // username: "test99@test99.com",
+        email: "test99@test99.com",
+        password: "12345678",
+        username: "test99@test99.com",
       },
       error: {},
     };

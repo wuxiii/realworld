@@ -2,7 +2,8 @@
   <div class="home-page">
     <div class="banner">
       <div class="container">
-        <h1 class="logo-font">conduit
+        <h1 class="logo-font">
+吴希作业
 </h1>
         <p>A place to share your knowledge.</p>
       </div>
@@ -64,7 +65,7 @@
                   params: {username: article.author.username},
                 }"
               >
-                <img :src="article.author.image">
+                <img :src="article.author.image" >
               </nuxt-link>
               <div class="info">
                 <nuxt-link
@@ -158,6 +159,8 @@ import {requestAll} from "@/plugins/request";
 import {mapState} from "vuex";
 export default {
   name: "Home",
+  middleware: "authenticated",
+
   async asyncData({
     isDev,
     route,
