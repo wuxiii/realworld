@@ -22,7 +22,7 @@
       >
         {{ article.author.username }}
       </nuxt-link>
-      <span class="date">{{ article.createdAt | date("MMM DD, YYYY") }}</span>
+      <span class="date">{{ article.createdAt | date('MMM DD, YYYY') }}</span>
     </div>
     <button
       v-if="article.author.username !== user.username"
@@ -32,9 +32,7 @@
       }"
     >
       <i class="ion-plus-round" />
-      <template v-if="article.author.following">
-        Follow {{ article.author.username }}
-      </template>
+      <template v-if="article.author.following"> Follow {{ article.author.username }} </template>
       <template v-else>
         Unfollow
         {{ article.author.username }}
@@ -55,10 +53,10 @@
 </template>
 
 <script>
-import {mapState} from "vuex";
+import {mapState} from 'vuex';
 
 export default {
-  name: "ArticleMeta",
+  name: 'ArticleMeta',
   props: {
     article: {
       type: Object,
@@ -66,7 +64,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["user"]),
+    ...mapState(['user']),
   },
 };
 </script>

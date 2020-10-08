@@ -26,36 +26,25 @@
 </template>
 
 <script>
-import {getArticle} from "@/api/article";
-import MarkdownIt from "markdown-it";
-import ArticleMeta from "./components/article-meta";
-import ArticleComments from "./components/article-comments";
+import {getArticle} from '@/api/article';
+import MarkdownIt from 'markdown-it';
+import ArticleMeta from './components/article-meta';
+import ArticleComments from './components/article-comments';
 export default {
-  name: "Article",
+  name: 'Article',
   components: {
     ArticleMeta,
     ArticleComments,
   },
-  async asyncData({
-    isDev,
-    route,
-    store,
-    env,
-    params,
-    query,
-    req,
-    res,
-    redirect,
-    error,
-  }) {
+  async asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
     const {data} = await getArticle(params.slug);
 
-    console.log("Articledata", data);
+    console.log('Articledata', data);
     const {article} = data;
 
     const md = new MarkdownIt();
     article.body = md.render(article.body);
-    console.log("objectarticle", article);
+    console.log('objectarticle', article);
     return {
       article,
     };
@@ -65,8 +54,8 @@ export default {
       title: `${this.article.title} - RealWorld`,
       meta: [
         {
-          hid: "description",
-          name: "description",
+          hid: 'description',
+          name: 'description',
           content: this.article.description,
         },
       ],

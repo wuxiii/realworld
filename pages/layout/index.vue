@@ -10,20 +10,21 @@
           </li>
           <template v-if="user">
             <li class="nav-item">
-              <nuxt-link class="nav-link" to="/editor">
-                <i class="ion-compose" />&nbsp;New Post
-              </nuxt-link>
+              <nuxt-link class="nav-link" to="/editor"> <i class="ion-compose" />&nbsp;New Post </nuxt-link>
             </li>
             <li class="nav-item">
-              <nuxt-link class="nav-link" to="/settings">
-                <i class="ion-gear-a" />&nbsp;Settings
-              </nuxt-link>
+              <nuxt-link class="nav-link" to="/settings"> <i class="ion-gear-a" />&nbsp;Settings </nuxt-link>
             </li>
 
             <li class="nav-item">
               <nuxt-link
                 class="nav-link"
-                :to="{name: 'profile', params: {username: user.username}}"
+                :to="{
+                  name: 'profile',
+                  params: {
+                    username: user.username,
+                  },
+                }"
               >
                 <img class="user-pic" :src="user.image" />
                 {{ user.username }}
@@ -47,8 +48,7 @@
         <nuxt-link to="/" class="logo-font"> conduit </nuxt-link>
         <span class="attribution">
           An interactive learning project from
-          <nuxt-link to="https://thinkster.io">Thinkster</nuxt-link>. Code &amp;
-          design licensed under MIT.
+          <nuxt-link to="https://thinkster.io">Thinkster</nuxt-link>. Code &amp; design licensed under MIT.
         </span>
       </div>
     </footer>
@@ -56,11 +56,13 @@
 </template>
 
 <script>
-import {mapState} from "vuex";
+import {mapState} from 'vuex';
 
 export default {
-  name: "Layout",
-  computed: {...mapState(["user"])},
+  name: 'Layout',
+  computed: {
+    ...mapState(['user']),
+  },
   created() {},
   mounted() {
     // const user = mapState(['user']);

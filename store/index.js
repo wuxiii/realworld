@@ -1,4 +1,4 @@
-const cookieparser = process.server ? require("cookieparser") : undefined;
+const cookieparser = process.server ? require('cookieparser') : undefined;
 export const state = () => {
   return {
     user: null,
@@ -27,6 +27,6 @@ export const actions = {
     }
 
     // 提交 mutation 修改 state 状态
-    commit("setUser", user);
+    commit('setUser', user);
   },
 };

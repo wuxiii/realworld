@@ -2,17 +2,13 @@
   <div>
     <form class="card comment-form" @submit.prevent="submit">
       <div class="card-block">
-        <textarea
-          v-model="text"
-          class="form-control"
-          placeholder="Write a comment..."
-          rows="3"
-        />
+        <textarea v-model="text"
+class="form-control" placeholder="Write a comment..."
+rows="3" />
       </div>
       <div class="card-footer">
-        <img src="http://i.imgur.com/Qr71crq.jpg" class="comment-author-img" >
-        <button class="btn btn-sm btn-primary">Post Comment
-</button>
+        <img src="http://i.imgur.com/Qr71crq.jpg" class="comment-author-img" />
+        <button class="btn btn-sm btn-primary">Post Comment</button>
       </div>
     </form>
 
@@ -46,19 +42,17 @@
         >
           {{ comment.author.username }}
         </nuxt-link>
-        <span class="date-posted">{{
-          comment.createdAt | date("MMM DD, YYYY")
-        }}</span>
+        <span class="date-posted">{{ comment.createdAt | date('MMM DD, YYYY') }}</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import {getComments, submitComments} from "@/api/article";
+import {getComments, submitComments} from '@/api/article';
 
 export default {
-  name: "ArticleComments",
+  name: 'ArticleComments',
   props: {
     article: {
       type: Object,
@@ -68,7 +62,7 @@ export default {
   data() {
     return {
       comments: [], // 文章评论
-      text: "",
+      text: '',
     };
   },
   async mounted() {
@@ -87,7 +81,7 @@ export default {
       });
       if (status === 200) {
         this.getComment();
-        this.text = "";
+        this.text = '';
       }
     },
 

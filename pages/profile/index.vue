@@ -7,8 +7,7 @@
             <img src="http://i.imgur.com/Qr71crq.jpg" class="user-img" />
             <h4>Eric Simons</h4>
             <p>
-              Cofounder @GoThinkster, lived in Aol's HQ for a few months, kinda
-              looks like Peeta from the Hunger Games
+              Cofounder @GoThinkster, lived in Aol's HQ for a few months, kinda looks like Peeta from the Hunger Games
             </p>
             <button class="btn btn-sm btn-outline-secondary action-btn">
               <i class="ion-plus-round" />
@@ -43,7 +42,8 @@
                 <span class="date">January 20th</span>
               </div>
               <button class="btn btn-outline-primary btn-sm pull-xs-right">
-                <i class="ion-heart" /> 29
+                <i class="ion-heart" />
+                29
               </button>
             </div>
             <a href class="preview-link">
@@ -63,14 +63,12 @@
                 <span class="date">January 20th</span>
               </div>
               <button class="btn btn-outline-primary btn-sm pull-xs-right">
-                <i class="ion-heart" /> 32
+                <i class="ion-heart" />
+                32
               </button>
             </div>
             <a href class="preview-link">
-              <h1>
-                The song you won't ever stop singing. No matter how hard you
-                try.
-              </h1>
+              <h1>The song you won't ever stop singing. No matter how hard you try.</h1>
               <p>This is the description for the post.</p>
               <span>Read more...</span>
               <ul class="tag-list">
@@ -87,7 +85,7 @@
 
 <script>
 export default {
-  name: "UserProfile",
+  name: 'UserProfile',
   // middleware: 'authenticated',
 };
 </script>
